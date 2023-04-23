@@ -1,5 +1,8 @@
-# 上传文件目录
-upload: ./upload 
+# 上传文件保存目录
+fileSave: ./upload 
+
+# 上传大文件保存目录
+bigFileSave: ./bigFileUpload
 
 # host
 host: localhost
