@@ -1,13 +1,15 @@
 <template>
   <div class="cool-cms">
-    <ElForm  :label-position="'right'" :model="form">
+    <!-- <ElForm  :label-position="'right'" :model="form">
       <RenderForm :value="form" :form-models="models" />
-    </ElForm>
+    </ElForm> -->
+    <model-page />
   </div>
 </template>
 <script lang="ts" setup>
 import RenderForm from './components/RenderForm.vue';
 import { ElButton, ElForm, ElFormItem, ElInput } from 'element-plus'
+import ModelPage from './page/model/index.vue'
 import { reactive, watch } from 'vue';
 // import { ref } from 'vue';
 const form = reactive<Record<string, string>>({})
