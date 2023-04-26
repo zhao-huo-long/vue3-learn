@@ -23,9 +23,5 @@ const { modelItem, prop } = defineProps<{
   modelItem: DataModel[] | DataModel,
   prop?: string
 }>();
-console.log(prop)
-
-
-// console.log(modelItem)
 </script>
 
