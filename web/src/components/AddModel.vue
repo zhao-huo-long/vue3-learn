@@ -1,0 +1,61 @@
+<template>
+  <el-dialog destroy-on-close @close="$emit('close')" v-model="dialogFormVisible" title="新增字段">
+    <el-form ref="formRef" :model="form">
+      <el-form-item prop="type" :rules="[req]" label="类型:" label-width="100">
+        <el-select style="width: 400px" v-model="form.type" placeholder="选择类型">
+          <el-option v-for="i in MODEL_TYPE_OP" :key="i.value" :label="i.label" :value="i.value" />
+        </el-select>
+      </el-form-item>
+      <el-form-item prop="label" :rules="[req]" label="标签:" label-width="100">
+        <el-input style="width: 400px" v-model="form.label" autocomplete="off" />
+      </el-form-item>
+      <el-form-item prop="key" :rules="[req]" label="属性名:" label-width="100">
+        <el-input style="width: 400px" v-model="form.key" autocomplete="off" />
+      </el-form-item>
+      <el-form-item prop="require" label="必填:" label-width="100">
+        <el-switch v-model="form.require" autocomplete="off" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="ok">
+          确认
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
+</template>
+
+<script lang="ts" setup>
+import { ElDialog, ElForm, ElFormItem, ElSelect, ElOption, ElInput, ElButton, ElSwitch } from 'element-plus'
+import { reactive, ref, watch } from 'vue'
+import { MODEL_TYPE_OP, createModel } from '../utils'
+
+const req = { required: true, message: '请输入' }
+
+const dialogFormVisible = ref(false)
+const formRef = ref<any>()
+
+const props = defineProps<{ vis?: boolean }>()
+
+const emit = defineEmits<{
+  (event: 'close'): void,
+  (event: 'confirm', value: DataModel): void,
+}>()
+
+watch(props, () => {
+  dialogFormVisible.value = props.vis
+})
+
+const form = reactive<any>({})
+
+const ok = async () => {
+  const res = await formRef.value?.validate?.()
+  if (res) {
+    const data = createModel(form.type, form)
+    emit('confirm', data)
+  }
+}
+
+</script>

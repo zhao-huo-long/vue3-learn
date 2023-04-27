@@ -6,14 +6,15 @@
           <div class="card-header">
             <el-icon>
               <MessageBox />
-            </el-icon>
+            </el-icon> 
             <span style="margin-left: 6px;">model-名称</span>
-            <el-icon @click="append(cfg.data)" style="margin-left: auto">
+            <el-icon @click="currentNode = model ;vis = true" style="margin-left: auto">
               <Plus />
             </el-icon>
           </div>
         </template>
-        <el-tree ref="tree" @current-change="change" :data="model" draggable default-expand-all node-key="uuid">
+        <el-tree ref="tree" @current-change="change" :data="model" draggable
+          default-expand-all node-key="uuid">
           <template #default="cfg">
             <div class="custom-tree-node">
               <span>{{ cfg.node.label }}</span>
@@ -23,7 +24,8 @@
                     <Minus />
                   </el-icon>
                 </a>
-                <a style="margin-left: 8px" @click="append(cfg.data)">
+                <a v-if="canAdd(cfg.data)" style="margin-left: 8px"
+                  @click="e => { e.stopPropagation(); currentNode = cfg.data; vis = true }">
                   <el-icon>
                     <Plus />
                   </el-icon>
@@ -51,29 +53,42 @@
             预览
           </div>
         </template>
-        123123
-        <RenderForm :value="mock"  :form-models="model" />
+        <div>
+          <ElForm :label-width="140" label-position="top">
+            <RenderForm :value="mock" :form-models="model" />
+          </ElForm>
+        </div>
       </ElCard>
     </div>
+    <AddModel @confirm="confirm" @close="vis = false" :vis="vis" />
   </div>
 </template>
 <script lang="ts" setup>
-import { ElCard, ElTree, ElIcon, } from 'element-plus'
+import { ElCard, ElTree, ElIcon, ElForm } from 'element-plus'
 import { Plus, Minus, MessageBox } from "@element-plus/icons-vue"
-import { ref } from 'vue'
+import { ref, watch, reactive } from 'vue'
 import RenderForm from '../../components/RenderForm.vue'
+import AddModel from '../../components/AddModel.vue'
 import { v4 as uuid } from 'uuid'
+import { createByModels } from '../../utils'
+
+const vis = ref<(boolean)>(false)
+
 const tree = ref<(any)>()
 
-const mock = ref({})
-
-
-const model: DataModel[] = [
+const model: DataModel[] = reactive([] || [
   {
     label: '名字',
     key: 'name',
     uuid: uuid(),
     type: 'text',
+    require: false,
+  },
+  {
+    label: '头像',
+    key: 'avatar',
+    uuid: uuid(),
+    type: 'image',
     require: false,
   },
   {
@@ -94,6 +109,13 @@ const model: DataModel[] = [
         key: 'name',
         uuid: uuid(),
         type: 'text',
+        require: false,
+      },
+      {
+        label: '头像',
+        key: 'avatar',
+        uuid: uuid(),
+        type: 'image',
         require: false,
       },
       {
@@ -126,16 +148,38 @@ const model: DataModel[] = [
     ],
     require: false,
   }
-]
+])
 
+const mock = ref(createByModels({}, model))
 
+watch(mock, () => {
+  console.log(mock)
+}, { deep: true })
 
+watch(mock, () => {
+  console.log(mock)
+}, { deep: true })
 
-function change(data: any, node: any) {
-  console.log(data, node);
+const currentNode = ref()
+
+function confirm(data: any) {
+  // console.log(data, currentNode)
+  if(currentNode.value.push){
+    // currentNode.value.push(data)
+  }else{
+    tree.value?.append(data, currentNode.value)
+  }
 }
 
-function remove(node, data, cfg) {
+function change(e) {
+  console.log(e)
+}
+
+function add(parent: any, data: any) {
+
+}
+
+function remove(_node: any, _data: any, cfg: any) {
   tree.value?.remove(cfg.data)
 }
 
@@ -143,8 +187,9 @@ function canDel(data: DataModel) {
   return !data.children?.length
 }
 
-function canAdd() {
 
+function canAdd(data: DataModel) {
+  return ['list'].includes(data.type!)
 }
 
 </script>

@@ -18,57 +18,6 @@ watch(form, () => {
   console.log(form)
 }, { deep: true })
 
-// const models = [
-//   {
-//     type: 'input',
-//     prop: 'name',
-//   },
-//   {
-//     type: 'enum',
-//     prop: 'enum',
-//   },
-//   {
-//     type: 'image',
-//     prop: 'img'
-//   },
-//   {
-//     type: 'list',
-//     prop: 'list',
-//     children: [
-//       {
-//         type: 'input',
-//         prop: 'name',
-//       },
-//       {
-//         type: 'enum',
-//         prop: 'enum',
-//       },
-//       {
-//         type: 'image',
-//         prop: 'img'
-//       },
-//       {
-//         type: 'list',
-//         prop: 'list',
-//         children: [
-//           {
-//             type: 'input',
-//             prop: 'name',
-//           },
-//           {
-//             type: 'enum',
-//             prop: 'enum',
-//           },
-//           {
-//             type: 'image',
-//             prop: 'img'
-//           },
-//         ]
-//       }
-//     ]
-//   }
-// ]
-
 </script>
 <style lang="less">
 .cool-cms {
