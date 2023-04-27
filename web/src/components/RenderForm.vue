@@ -1,18 +1,18 @@
 <template>
   <div class="cool-cms">
     <template v-for="model in formModels">
-      <ElFormItem :label="model.prop" :prop="model.prop">
-        <ElInput v-if="model.type === 'input'" v-model="value[model.prop]">
+      <ElFormItem :label="model.key" :prop="model.key">
+        <ElInput v-if="model.type === 'input'" v-model="value[model.key]">
         </ElInput>
       </ElFormItem>
-      <RenderForm v-if="model.type === 'list'" :value="value[model.prop] ? value[model.prop] : value[model.prop] = []"
+      <RenderForm v-if="model.type === 'list'" :value="value[model.key]" 
         :form-models="model.children">
       </RenderForm>
     </template>
   </div>
 </template>
 <script lang="ts" setup>
-import { ElForm, ElFormItem, ElInput } from 'element-plus'
+import { ElFormItem, ElInput } from 'element-plus'
 
 defineProps<{
   value: any,

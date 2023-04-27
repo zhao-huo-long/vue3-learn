@@ -7,8 +7,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import RenderForm from './components/RenderForm.vue';
-import { ElButton, ElForm, ElFormItem, ElInput } from 'element-plus'
+// import RenderForm from './components/RenderForm.vue';
+// import { ElButton, ElForm, ElFormItem, ElInput } from 'element-plus'
 import ModelPage from './page/model/index.vue'
 import { reactive, watch } from 'vue';
 // import { ref } from 'vue';
@@ -18,56 +18,56 @@ watch(form, () => {
   console.log(form)
 }, { deep: true })
 
-const models = [
-  {
-    type: 'input',
-    prop: 'name',
-  },
-  {
-    type: 'enum',
-    prop: 'enum',
-  },
-  {
-    type: 'image',
-    prop: 'img'
-  },
-  {
-    type: 'list',
-    prop: 'list',
-    children: [
-      {
-        type: 'input',
-        prop: 'name',
-      },
-      {
-        type: 'enum',
-        prop: 'enum',
-      },
-      {
-        type: 'image',
-        prop: 'img'
-      },
-      {
-        type: 'list',
-        prop: 'list',
-        children: [
-          {
-            type: 'input',
-            prop: 'name',
-          },
-          {
-            type: 'enum',
-            prop: 'enum',
-          },
-          {
-            type: 'image',
-            prop: 'img'
-          },
-        ]
-      }
-    ]
-  }
-]
+// const models = [
+//   {
+//     type: 'input',
+//     prop: 'name',
+//   },
+//   {
+//     type: 'enum',
+//     prop: 'enum',
+//   },
+//   {
+//     type: 'image',
+//     prop: 'img'
+//   },
+//   {
+//     type: 'list',
+//     prop: 'list',
+//     children: [
+//       {
+//         type: 'input',
+//         prop: 'name',
+//       },
+//       {
+//         type: 'enum',
+//         prop: 'enum',
+//       },
+//       {
+//         type: 'image',
+//         prop: 'img'
+//       },
+//       {
+//         type: 'list',
+//         prop: 'list',
+//         children: [
+//           {
+//             type: 'input',
+//             prop: 'name',
+//           },
+//           {
+//             type: 'enum',
+//             prop: 'enum',
+//           },
+//           {
+//             type: 'image',
+//             prop: 'img'
+//           },
+//         ]
+//       }
+//     ]
+//   }
+// ]
 
 </script>
 <style lang="less">
