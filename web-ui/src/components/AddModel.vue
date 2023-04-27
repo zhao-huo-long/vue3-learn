@@ -27,7 +27,7 @@
   </el-dialog>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ElDialog, ElForm, ElFormItem, ElSelect, ElOption, ElInput, ElButton, ElSwitch } from 'element-plus'
 import { reactive, ref, watch } from 'vue'
 import { MODEL_TYPE_OP, createModel } from '../utils'
@@ -35,20 +35,17 @@ import { MODEL_TYPE_OP, createModel } from '../utils'
 const req = { required: true, message: '请输入' }
 
 const dialogFormVisible = ref(false)
-const formRef = ref<any>()
+const formRef = ref()
 
-const props = defineProps<{ vis?: boolean }>()
+const props = defineProps(['vis'])
 
-const emit = defineEmits<{
-  (event: 'close'): void,
-  (event: 'confirm', value: DataModel): void,
-}>()
+const emit = defineEmits(['close', 'confirm'])
 
 watch(props, () => {
   dialogFormVisible.value = props.vis
 })
 
-const form = reactive<any>({})
+const form = reactive({})
 
 const ok = async () => {
   const res = await formRef.value?.validate?.()

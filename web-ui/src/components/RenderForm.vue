@@ -1,14 +1,16 @@
 <template>
-  <template v-if="formModels.length" v-for="model in formModels">
+  <template v-if="Array.isArray(formModels)" v-for="model in formModels">
     <RenderForm :value="value" :form-models="model">
     </RenderForm>
   </template>
-  <template v-else-if="formModels.type === 'list'">
-    <div v-if="formModels?.children?.length" style="margin-left:35px">
+  <template v-else-if="formModels?.type === 'list'">
+    <div v-if="formModels?.children?.length" style="">
       {{ formModels.label + ' / ' + formModels.key }}
-      <RenderForm :key="formModels.key + i" v-for="(v, i) in value[formModels.key]" :value="v"
-        :form-models="formModels.children">
-      </RenderForm>
+      <div style="margin-left:35px">
+        <RenderForm :key="formModels.key + i" v-for="(v, i) in value[formModels.key]" :value="v"
+          :form-models="formModels.children">
+        </RenderForm>
+      </div>
     </div>
   </template>
   <ElFormItem v-else-if="formModels" :key="formModels.key" :label="formModels.label + ' / ' + formModels.key"
@@ -25,13 +27,10 @@
     </ElUpload>
   </ElFormItem>
 </template>
-<script lang="ts" setup>
+<script setup>
 import { ElFormItem, ElInput, ElUpload } from 'element-plus'
 
-defineProps<{
-  value: any,
-  formModels: any
-}>()
+defineProps(['formModels', 'value'])
 
 </script>
 <style lang="less">

@@ -1,7 +1,7 @@
 import { set } from 'lodash-es'
 import { v4 } from 'uuid'
 
-export function createByModels(target = {}, models: DataModel[]) {
+export function createByModels(target = {}, models) {
   for (const model of models) {
     if (model.type === 'text') {
       set(target, model.key, '')
@@ -32,7 +32,7 @@ export const MODEL_TYPE_OP = [{
 
 export const MODEL_TYPE = MODEL_TYPE_OP.map(i => i.value)
 
-export function createModel(type: DataModel['type'], option: DataModel): DataModel {
+export function createModel(type, option) {
   return {
     ...option,
     type,
