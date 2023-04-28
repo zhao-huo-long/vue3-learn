@@ -7,39 +7,37 @@
       <ElCard>
         <template #header>
           <div class="card-header">
-            字段详情
+            表单预览
           </div>
         </template>
-        字段详情
+        <div>
+          <ElForm :model="mockVal" size="small" :label-width="140" label-position="top">
+            <RenderForm :value="mockVal" :form-models="model" />
+          </ElForm>
+        </div>
       </ElCard>
     </div>
     <div class="model-block">
       <ElCard>
         <template #header>
           <div class="card-header">
-            预览
+            内容预览
           </div>
         </template>
-        <div>
-          <ElForm :label-width="140" label-position="top">
-            <RenderForm :value="mockVal" :form-models="model" />
-          </ElForm>
-        </div>
+        <pre><code class="language-json" v-html="preCode"></code></pre>
       </ElCard>
     </div>
   </div>
 </template>
 <script setup>
-import { ElCard, ElTree, ElIcon, ElForm } from 'element-plus'
-import { Plus, Minus, MessageBox } from "@element-plus/icons-vue"
-import { ref, watch, reactive, provide } from 'vue'
+import { ElCard, ElForm } from 'element-plus'
+import { ref, watch, reactive, provide, computed } from 'vue'
 import RenderForm from '../../components/RenderForm.vue'
 import ModelTree from './ModelTree.vue'
 import { createByModels } from '../../utils'
+import { FakerModels } from './constants'
 
-const tree = ref()
-
-const model = reactive([])
+const model = reactive(FakerModels || [])
 
 provide('model', model)
 
@@ -51,8 +49,11 @@ watch(model, () => {
   mockVal.value = createByModels({}, model);
 }, { deep: true });
 
-watch(mock, () => {
+watch(mockVal, () => {
+  hljs.highlightAll()
 }, { deep: true });
+
+const preCode = computed(() => hljs.highlight(JSON.stringify(mockVal.value, null, 2), { language: 'json' }).value)
 
 </script>
 
@@ -62,12 +63,14 @@ watch(mock, () => {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
+  // column-gap: 10px;
   flex-grow: 2;
   flex-shrink: 2;
 
   .model-block {
     width: 33%;
     border-radius: 5px;
+    // min-width: 400px;
   }
 
   .card-header {
@@ -79,16 +82,6 @@ watch(mock, () => {
 
   .el-icon {
     height: 100%;
-  }
-
-  .custom-tree-node {
-    // margin: 10px;
-    flex-wrap: 2;
-    width: 100%;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    justify-content: space-between;
   }
 }
 </style>
